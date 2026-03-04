@@ -66,15 +66,16 @@ module "blog_alb" {
 
   security_groups = [module.blog_sg.security_group_id]
 
-  access_logs = {
-    bucket = "my-alb-logs"
-  }
+  # access_logs = { bucket = "my-alb-logs" }  # <-- comment out for now
 
   listeners = {
     blog-http  = {
       port     = 80
       protocol = "HTTP"
-      forward  = {
+
+      
+      default_action = {
+        type             = "forward"
         target_group_arn = aws_lb_target_group.blog.arn
       }
     }
