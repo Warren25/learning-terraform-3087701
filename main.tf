@@ -71,11 +71,11 @@ module "blog_alb" {
   }
 
   listeners = {
-    blog-http = {
+    blog-http  = {
       port     = 80
       protocol = "HTTP"
-      forward = {
-        target_group_arn = aws_lb_target_group.blog_arn
+      forward  = {
+        target_group_arn = aws_lb_target_group.blog.arn
       }
     }
   }
