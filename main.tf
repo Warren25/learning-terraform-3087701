@@ -59,6 +59,7 @@ module "blog_sg" {
 
 module "blog_alb" {
   source = "terraform-aws-modules/alb/aws"
+  version = "6.0.0"
 
   name    = "blog-alb"
   vpc_id  = module.blog_vpc.vpc_id
@@ -68,18 +69,17 @@ module "blog_alb" {
 
   # access_logs = { bucket = "my-alb-logs" }  # <-- comment out for now
 
+
   listeners = {
-    blog-http  = {
+    blog-http = {
       port     = 80
       protocol = "HTTP"
-
-      
-      default_action = [{
-        type             = "forward"
+      forward  = {
         target_group_arn = aws_lb_target_group.blog.arn
-      }]
+      }
     }
   }
+
 
   tags = {
     Environment = "dev"
