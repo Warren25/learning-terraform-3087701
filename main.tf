@@ -57,7 +57,6 @@ module "blog_alb" {
 
   # access_logs = { bucket = "my-alb-logs" }  # <-- comment out for now
 
-
   listeners = {
     blog-http = {
       port     = 80
@@ -79,12 +78,6 @@ resource "aws_lb_target_group" "blog" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = module.blog_vpc.vpc_id
-}
-
-resource "aws_lb_target_group_attachment" "blog" {
-  target_group_arn = aws_lb_target_group.blog.arn
-  target_id        = aws_instance.blog.id
-  port             = 80
 }
 
 module "autoscaling" {
